@@ -4,9 +4,11 @@
     {
         static void Main(string[] args)
         {
-            Console.ReadKey(true);
             Abstract.Generate generate = new Abstract.Generate();
+
             generate.Start();
+            generate.Reset();
+
             Console.ReadKey(true);
         }
     }

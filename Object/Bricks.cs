@@ -9,17 +9,17 @@ namespace Maze.Object
     internal class Bricks : Objects
     {
         public Abstract.Position Position;
-        public Abstract.IntervalBlockType IntervalBlockType;
+        public Abstract.E_IntervalBlockType E_IntervalBlockType;
         public Bricks[] AdjacentBlock;
-        public Bricks(int x, int y, Abstract.IntervalBlockType intervalBlockType)
+        public Bricks(int x, int y, Abstract.E_IntervalBlockType E_IntervalBlockType)
         {
             AdjacentBlock = new Bricks[4];
             Position = new Abstract.Position(x, y);
-            IntervalBlockType = intervalBlockType;
+            E_IntervalBlockType = E_IntervalBlockType;
         }
         public void AddAdjacentBlocks(Bricks[,] bricks)
         {
-            if (IntervalBlockType == Abstract.IntervalBlockType.GridPoint)
+            if (E_IntervalBlockType == Abstract.E_IntervalBlockType.GridPoint)
             {
                 int x = Position.X;
                 int y = Position.Y;
@@ -43,13 +43,21 @@ namespace Maze.Object
         }
         public override void Draw(bool WhetherToSolution)
         {
-            Console.ForegroundColor = IntervalBlockType == Abstract.IntervalBlockType.Wall ? ConsoleColor.Gray :
-                                      IntervalBlockType == Abstract.IntervalBlockType.GridPoint ? ConsoleColor.Green :
-                                      IntervalBlockType == Abstract.IntervalBlockType.Road ? ConsoleColor.Black : 
-                                      WhetherToSolution ?  
-                                      IntervalBlockType == Abstract.IntervalBlockType.Untie ? ConsoleColor.DarkGreen : ConsoleColor.White : ConsoleColor.Black;
-            Console.SetCursorPosition((Position.X + 1) * 2, Position.Y + 1);
-            Console.Write("■");
+            if (!WhetherToSolution && E_IntervalBlockType == Abstract.E_IntervalBlockType.Wall)
+            {
+                Console.ForegroundColor = ConsoleColor.Gray;
+                Console.SetCursorPosition((Position.X + 1) * 2, Position.Y + 1);
+                Console.Write("■");
+            }
+            else if(WhetherToSolution)
+            {
+                Console.ForegroundColor = E_IntervalBlockType == Abstract.E_IntervalBlockType.Wall ? ConsoleColor.Gray :
+                                          E_IntervalBlockType == Abstract.E_IntervalBlockType.Road ? ConsoleColor.Black :
+                                          WhetherToSolution ?
+                                          E_IntervalBlockType == Abstract.E_IntervalBlockType.Untie ? ConsoleColor.DarkGreen : ConsoleColor.White : ConsoleColor.Black;
+                Console.SetCursorPosition((Position.X + 1) * 2, Position.Y + 1);
+                Console.Write("■");
+            }
         }
     }
 }

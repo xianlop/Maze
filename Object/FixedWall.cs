@@ -9,22 +9,21 @@ namespace Maze.Object
     internal class FixedWall : Objects
     {
         Abstract.Position Position;
-        public Abstract.IntervalBlockType IntervalBlockType;
+        public Abstract.E_IntervalBlockType E_IntervalBlockType;
 
-        public FixedWall(int x, int y, Abstract.IntervalBlockType intervalBlockType)
+        public FixedWall(int x, int y, Abstract.E_IntervalBlockType e_IntervalBlockType)
         {
             Position = new Abstract.Position(x, y);
-            IntervalBlockType = intervalBlockType;
+            E_IntervalBlockType = e_IntervalBlockType;
         }
         public override void Draw(bool WhetherToSolution)
         {
-            Console.ForegroundColor = IntervalBlockType == Abstract.IntervalBlockType.Wall ? ConsoleColor.Gray :
-                                      WhetherToSolution ?
-                                      IntervalBlockType == Abstract.IntervalBlockType.Entrance
-                                   || IntervalBlockType == Abstract.IntervalBlockType.Export ? ConsoleColor.DarkGreen :
-                                      ConsoleColor.White : ConsoleColor.Black;
-            Console.SetCursorPosition(Position.X * 2, Position.Y);
-            Console.Write("■");
+            if (E_IntervalBlockType == Abstract.E_IntervalBlockType.Wall)
+            {
+                Console.ForegroundColor = ConsoleColor.Gray;
+                Console.SetCursorPosition(Position.X * 2, Position.Y);
+                Console.Write("■");
+            }
         }
     }
 }

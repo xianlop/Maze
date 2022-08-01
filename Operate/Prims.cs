@@ -20,7 +20,7 @@ namespace Maze.Operate
             Path = new Object.Bricks[map.GridPoints];
             CurrentIndex = 0;
             Path[CurrentIndex] = Bricks[0, 0];
-            Path[CurrentIndex].IntervalBlockType = Abstract.IntervalBlockType.Road;
+            Path[CurrentIndex].E_IntervalBlockType = Abstract.E_IntervalBlockType.Road;
         }
         public void Run()
         {
@@ -32,14 +32,14 @@ namespace Maze.Operate
         public void SelectAdjacentBlocks()
         {
             int Index = Random.Next(0, 4);
-            if (Path[CurrentIndex].AdjacentBlock[Index] != null && Path[CurrentIndex].AdjacentBlock[Index].IntervalBlockType == Abstract.IntervalBlockType.GridPoint)
+            if (Path[CurrentIndex].AdjacentBlock[Index] != null && Path[CurrentIndex].AdjacentBlock[Index].E_IntervalBlockType == Abstract.E_IntervalBlockType.GridPoint)
             {
                 int x = (Path[CurrentIndex].Position.X + Path[CurrentIndex].AdjacentBlock[Index].Position.X) / 2;
                 int y = (Path[CurrentIndex].Position.Y + Path[CurrentIndex].AdjacentBlock[Index].Position.Y) / 2;
                 CurrentIndex++;
                 Path[CurrentIndex] = Path[CurrentIndex - 1].AdjacentBlock[Index];
-                Path[CurrentIndex].IntervalBlockType = Abstract.IntervalBlockType.Road;
-                Bricks[x, y].IntervalBlockType = Abstract.IntervalBlockType.Road;
+                Path[CurrentIndex].E_IntervalBlockType = Abstract.E_IntervalBlockType.Road;
+                Bricks[x, y].E_IntervalBlockType = Abstract.E_IntervalBlockType.Road;
                 if (Path[CurrentIndex].Position.X == Bricks.GetLength(0) - 1 && Path[CurrentIndex].Position.Y == Bricks.GetLength(1) - 1)
                 {
                     GenerateSolution();
@@ -54,12 +54,12 @@ namespace Maze.Operate
         {
             for (int i = 0; i < Path.Length; i++)
             {
-                Path[i].IntervalBlockType = Abstract.IntervalBlockType.Untie;
+                Path[i].E_IntervalBlockType = Abstract.E_IntervalBlockType.Untie;
                 if (i != 0 && Path[i - 1] != null)
                 {
                     int x = (Path[i].Position.X + Path[i - 1].Position.X) / 2;
                     int y = (Path[i].Position.Y + Path[i - 1].Position.Y) / 2;
-                    Bricks[x, y].IntervalBlockType = Abstract.IntervalBlockType.Untie;
+                    Bricks[x, y].E_IntervalBlockType = Abstract.E_IntervalBlockType.Untie;
                 }
                 if (Path[i].Position.X == Bricks.GetLength(0) - 1 && Path[i].Position.Y == Bricks.GetLength(1) - 1)
                 {
@@ -76,7 +76,7 @@ namespace Maze.Operate
                 {
                     NotGridPoints++;
                 }
-                else if (Path[CurrentIndex].AdjacentBlock[i].IntervalBlockType != Abstract.IntervalBlockType.GridPoint)
+                else if (Path[CurrentIndex].AdjacentBlock[i].E_IntervalBlockType != Abstract.E_IntervalBlockType.GridPoint)
                 {
                     NotGridPoints++;
                 }
